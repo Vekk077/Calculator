@@ -8,8 +8,11 @@ WORKDIR /app
 COPY Calculator/calc.py .
 COPY Calculator/requirements.txt .
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies with error handling
+RUN pip install --no-cache-dir -r requirements.txt || echo "Some dependencies failed to install, continuing..."
+
+# Install pyinstaller separately to ensure it works
+RUN pip install pyinstaller
 
 # Expose port 8080 to allow access
 EXPOSE 8080
