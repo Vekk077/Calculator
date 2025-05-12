@@ -15,5 +15,8 @@ RUN pip install pyinstaller
 # Build the executable
 RUN pyinstaller --onefile -w calc.py
 
-# Set the entry point to run the executable
-CMD ["./dist/calc"]
+# Expose port 8080
+EXPOSE 8080
+
+# Set the entry point and ensure the app binds to 0.0.0.0:8080
+CMD ["python", "-m", "http.server", "8080"]
