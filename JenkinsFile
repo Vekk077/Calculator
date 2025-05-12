@@ -5,8 +5,9 @@ pipeline {
         stage('Setup') {
             steps {
                 script {
-                    // Install pyinstaller
-                    sh 'pip install pyinstaller'
+                    // Ensure Python and pip are available
+                    sh 'python3 -m ensurepip --default-pip'
+                    sh 'python3 -m pip install pyinstaller'
                 }
             }
         }
@@ -15,7 +16,7 @@ pipeline {
             steps {
                 script {
                     // Package calc.py as an executable
-                    sh 'pyinstaller --onefile -w calc.py'
+                    sh 'python3 -m PyInstaller --onefile -w calc.py'
                 }
             }
         }
