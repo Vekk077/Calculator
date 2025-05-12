@@ -9,7 +9,7 @@ pipeline {
         stage('Setup') {
             steps {
                 script {
-                    // Create a virtual environment to avoid permission issues
+                    // Ensure venv is correctly created
                     sh 'python3 -m venv venv'
                     sh 'source venv/bin/activate && python3 -m pip install --upgrade pip'
                     sh 'source venv/bin/activate && python3 -m pip install -r requirements.txt'
