@@ -5,8 +5,7 @@ pipeline {
         stage('Setup') {
             steps {
                 script {
-                    // Install Python and pip if missing
-                    sh 'sudo apt-get update && sudo apt-get install -y python3 python3-pip'
+                    sh 'apt-get update && apt-get install -y python3 python3-pip'
                     sh 'python3 -m pip install --upgrade pip'
                     sh 'python3 -m pip install -r requirements.txt'
                     sh 'python3 -m pip install pyinstaller'
@@ -17,7 +16,6 @@ pipeline {
         stage('Build Executable') {
             steps {
                 script {
-                    // Package calc.py as an executable
                     sh 'python3 -m PyInstaller --onefile -w calc.py'
                 }
             }
