@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Setup') {
+            steps {
+                script {
+                    // Install pyinstaller
+                    sh 'pip install pyinstaller'
+                }
+            }
+        }
+
+        stage('Build Executable') {
+            steps {
+                script {
+                    // Package calc.py as an executable
+                    sh 'pyinstaller --onefile -w calc.py'
+                }
+            }
+        }
+
+        stage('Archive Artifact') {
+            steps {
+                archiveArtifacts artifacts: 'dist/calc.exe', fingerprint: true
+            }
+        }
+    }
+}
