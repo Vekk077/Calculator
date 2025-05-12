@@ -5,8 +5,10 @@ pipeline {
         stage('Setup') {
             steps {
                 script {
-                    // Ensure Python and pip are available
+                    // Ensure Python and pip are installed correctly
                     sh 'python3 -m ensurepip --default-pip'
+                    sh 'python3 -m pip install --upgrade pip'
+                    sh 'python3 -m pip install -r requirements.txt'
                     sh 'python3 -m pip install pyinstaller'
                 }
             }
@@ -15,7 +17,7 @@ pipeline {
         stage('Build Executable') {
             steps {
                 script {
-                    // Package calc.py as an executable
+                    // Package calc.py as an executable using PyInstaller
                     sh 'python3 -m PyInstaller --onefile -w calc.py'
                 }
             }
@@ -23,7 +25,7 @@ pipeline {
 
         stage('Archive Artifact') {
             steps {
-                archiveArtifacts artifacts: 'dist/calc.exe', fingerprint: true
+                archiveArtifacts artifacts: 'dist/calc*', fingerprint: true
             }
         }
     }
